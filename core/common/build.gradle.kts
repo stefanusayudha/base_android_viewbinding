@@ -6,6 +6,12 @@ android {
     viewBinding {
         isEnabled = true
     }
+
+    externalNativeBuild {
+        cmake {
+            path("CMakeLists.txt")
+        }
+    }
 }
 
 dependencies {
@@ -54,8 +60,29 @@ dependencies {
     api("io.insert-koin:koin-android:$koinVersion")
     api("io.insert-koin:koin-androidx-workmanager:$koinVersion")
     api("io.insert-koin:koin-androidx-navigation:$koinVersion")
-//    api("io.insert-koin:koin-androidx-compose:$koinVersion")
+    // api("io.insert-koin:koin-androidx-compose:$koinVersion")
 
+    // RETROFIT
+    api("com.squareup.retrofit2:retrofit:2.9.0")
+    api("com.squareup.retrofit2:converter-gson:2.9.0")
+
+    // ROOM
+    val roomVersion = "2.4.2"
+    api("androidx.room:room-runtime:$roomVersion")
+    annotationProcessor("androidx.room:room-compiler:$roomVersion")
+    // optional - Kotlin Extensions and Coroutines support for Room
+    api("androidx.room:room-ktx:$roomVersion")
+    // optional - Test helpers
+    testApi("androidx.room:room-testing:$roomVersion")
+    // optional - Paging 3 Integration
+    api("androidx.room:room-paging:2.5.0-alpha01")
+
+    // GSON
+    api("com.google.code.gson:gson:2.9.0")
+
+    // DEBUG
+    debugApi("com.github.chuckerteam.chucker:library:3.5.2")
+    releaseApi("com.github.chuckerteam.chucker:library-no-op:3.5.2")
 
     // TEST
     testApi("junit:junit:4.13.2")
@@ -65,6 +92,6 @@ dependencies {
     androidTestApi("androidx.test.espresso:espresso-core:3.4.0")
 
     //  UI Test
-//    androidTestApi("androidx.compose.ui:ui-test-junit4:1.1.1")
-//    debugApi("androidx.compose.ui:ui-tooling:1.1.1")
+    // androidTestApi("androidx.compose.ui:ui-test-junit4:1.1.1")
+    // debugApi("androidx.compose.ui:ui-tooling:1.1.1")
 }

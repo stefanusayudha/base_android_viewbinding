@@ -7,8 +7,9 @@ import android.app.NotificationManager
 import android.content.Context
 import android.media.RingtoneManager
 import android.os.Build
-import com.iddevops.common.di.commonModules
-import com.iddevops.core.common.Variable
+import com.iddevops.common.commonModules
+import com.iddevops.core.common.Constant
+import com.iddevops.core.common.coreCommonModules
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -17,13 +18,14 @@ import org.koin.core.module.Module
 
 class Application : Application(){
     private val modules = arrayListOf<Module>().apply {
+        addAll(coreCommonModules)
         addAll(commonModules)
     }
     private val notificationChannel = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
         listOf(
             NotificationChannel(
-                Variable.NOTIFICATION.MAIN.CHANNEL,
-                Variable.NOTIFICATION.MAIN.NAME,
+                Constant.NOTIFICATION.MAIN.CHANNEL,
+                Constant.NOTIFICATION.MAIN.NAME,
                 NotificationManager.IMPORTANCE_HIGH
             )
         )

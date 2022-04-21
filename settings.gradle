@@ -15,10 +15,7 @@ dependencyResolutionManagement {
 rootProject.name = "Test Data Binding"
 include ':app'
 include ':core'
-include ':common'
 include ':core:common'
 include ':core:ui'
-include ':common:feature-dashboard'
-include ':common:data'
-include ':common:domain'
-include ':common:di'
+include ':modules'
+include ':modules:common'
