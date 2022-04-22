@@ -53,7 +53,10 @@ class TodoListFragment : BaseFragment<FragmentTodoListBinding>() {
                         todoAdapter?.showLoadMore()
                     }
                     is RequestState.Success -> {
-                        todoAdapter?.submitList(it.data)
+                        if (it.data.isEmpty())
+                            vm.getTodos()
+                        else
+                            todoAdapter?.submitList(it.data)
                     }
                     else -> {}
                 }
