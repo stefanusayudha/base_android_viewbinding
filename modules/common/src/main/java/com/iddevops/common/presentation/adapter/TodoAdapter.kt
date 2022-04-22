@@ -4,7 +4,9 @@ import android.content.Context
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
+import com.google.android.material.snackbar.Snackbar
 import com.iddevops.common.databinding.LayoutTodoListItemBinding
 import com.iddevops.common.databinding.LayoutTodoListLoadingBinding
 import com.iddevops.common.domain.model.TodoModel
@@ -28,6 +30,8 @@ class TodoAdapter(
         )
     }
 
+    private var snackbar: Snackbar? = null
+
     override fun onBindData(data: TodoModel, binding: LayoutTodoListItemBinding) {
         with(binding) {
             imgContent.setBackgroundColor(
@@ -38,6 +42,10 @@ class TodoAdapter(
             tvTitle.text = data.title
             tvUserId.text = data.userId.toString()
             tvComplete.text = data.completed.toString()
+
+            root.setOnClickListener {
+                Toast.makeText(root.context, "${data.title}", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -55,11 +63,11 @@ class TodoAdapter(
             val topMargin = if (holder.data == currentList.first()) dp16 else 0
             holder.binding?.root?.layoutParams?.apply {
                 this as ViewGroup.MarginLayoutParams
-                setMargins(dp16,topMargin,dp16,dp16)
+                setMargins(dp16, topMargin, dp16, dp16)
             }
             holder.loadingBinding?.root?.layoutParams?.apply {
                 this as ViewGroup.MarginLayoutParams
-                setMargins(dp16,topMargin,dp16,dp16)
+                setMargins(dp16, topMargin, dp16, dp16)
             }
         }
 
