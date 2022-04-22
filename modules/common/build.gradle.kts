@@ -8,7 +8,13 @@ android {
     }
 }
 
+plugins {
+    kotlin("kapt")
+}
+
 dependencies {
     api(project(path = ":core:common"))
     api(project(path = ":core:ui"))
+    // To use Kotlin annotation processing tool (kapt)
+    kapt("androidx.room:room-compiler:2.4.2")
 }

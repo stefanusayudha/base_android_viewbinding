@@ -2,6 +2,7 @@ package com.iddevops.core.common.presentation.base
 
 interface BaseView {
     fun initData()
-    fun initUi()
+    fun initUI()
+    fun initAction()
     fun initObserver()
 }

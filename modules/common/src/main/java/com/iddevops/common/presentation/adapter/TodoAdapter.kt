@@ -1,71 +1,73 @@
 package com.iddevops.common.presentation.adapter
 
+import android.content.Context
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
 import com.iddevops.common.databinding.LayoutTodoListItemBinding
+import com.iddevops.common.databinding.LayoutTodoListLoadingBinding
 import com.iddevops.common.domain.model.TodoModel
+import com.iddevops.core.common.presentation.ext.BaseListAdapter
+import com.iddevops.core.common.presentation.ext.ViewHolder
 
 class TodoAdapter(
-    private val onClick: (TodoModel) -> Unit
-) : ListAdapter<TodoModel, ViewHolder>(TodoDiff) {
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding =
-            LayoutTodoListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolder(binding, onClick)
-    }
-
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val flower = getItem(position)
-        holder.bind(flower)
-    }
-
-    override fun onViewAttachedToWindow(holder: ViewHolder) {
-        with(holder.binding.root) {
-            val margin16 =
-                this.context.resources.getDimension(com.iddevops.core.ui.R.dimen.dp16).toInt()
-            val marginTop = if (holder.data == currentList.first()) margin16 else 0
-
-            with(layoutParams as ViewGroup.MarginLayoutParams) {
-                setMargins(margin16, marginTop, margin16, margin16)
-            }
-        }
-        super.onViewAttachedToWindow(holder)
-    }
-}
-
-class ViewHolder(
-    val binding: LayoutTodoListItemBinding,
-    val onClick: (TodoModel) -> Unit
+    val onRequestLoadMore: () -> Unit
 ) :
-    RecyclerView.ViewHolder(binding.root) {
-    var data: TodoModel? = null
+    BaseListAdapter<TodoModel, LayoutTodoListItemBinding, LayoutTodoListLoadingBinding>(TodoDiff) {
 
-    init {
-        itemView.setOnClickListener {
-            data?.let {
-                onClick(it)
-            }
-        }
+    override fun itemBinding(parent: ViewGroup): LayoutTodoListItemBinding {
+        return LayoutTodoListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
     }
 
-    fun bind(todo: TodoModel) {
-        data = todo
+    override fun loadingItemBinding(parent: ViewGroup): LayoutTodoListLoadingBinding {
+        return LayoutTodoListLoadingBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
+    }
 
+    override fun onBindData(data: TodoModel, binding: LayoutTodoListItemBinding) {
         with(binding) {
             imgContent.setBackgroundColor(
-                if (todo.completed == true) Color.GREEN
+                if (data.completed == true) Color.GREEN
                 else Color.RED
             )
 
-            tvTitle.text = todo.title
-            tvUserId.text = todo.userId.toString()
-            tvComplete.text = todo.completed.toString()
+            tvTitle.text = data.title
+            tvUserId.text = data.userId.toString()
+            tvComplete.text = data.completed.toString()
         }
+    }
+
+    private var context: Context? = null
+    private val dp16 by lazy {
+        context?.resources?.getDimension(com.iddevops.core.ui.R.dimen.dp16)?.toInt() ?: 0
+    }
+
+    override fun onItemAttached(holder: ViewHolder<TodoModel, LayoutTodoListItemBinding, LayoutTodoListLoadingBinding>) {
+
+        // initiate context
+        context ?: run { context = holder.binding?.root?.context }
+
+        context?.run {
+            val topMargin = if (holder.data == currentList.first()) dp16 else 0
+            holder.binding?.root?.layoutParams?.apply {
+                this as ViewGroup.MarginLayoutParams
+                setMargins(dp16,topMargin,dp16,dp16)
+            }
+            holder.loadingBinding?.root?.layoutParams?.apply {
+                this as ViewGroup.MarginLayoutParams
+                setMargins(dp16,topMargin,dp16,dp16)
+            }
+        }
+
+        super.onItemAttached(holder)
+    }
+
+    override fun requestLoadMore() {
+        onRequestLoadMore.invoke()
     }
 }
 

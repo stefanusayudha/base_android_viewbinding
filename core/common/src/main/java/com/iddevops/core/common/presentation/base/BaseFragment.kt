@@ -23,7 +23,8 @@ abstract class BaseFragment<V : ViewBinding> : Fragment(), BaseView {
     ): View? {
         binding = getViewBinding(inflater, container, savedInstanceState)
         initData()
-        initUi()
+        initUI()
+        initAction()
         initObserver()
         return binding.root
     }

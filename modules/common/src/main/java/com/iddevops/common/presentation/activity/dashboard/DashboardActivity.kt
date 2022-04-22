@@ -16,7 +16,11 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>() {
 
     }
 
-    override fun initUi() {
+    override fun initUI() {
+
+    }
+
+    override fun initAction() {
 
     }
 

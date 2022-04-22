@@ -1,18 +1,14 @@
 package com.iddevops.common.presentation.fragment.todolist
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import com.iddevops.common.databinding.FragmentTodoListBinding
 import com.iddevops.common.presentation.adapter.TodoAdapter
 import com.iddevops.core.common.data.request.RequestState
 import com.iddevops.core.common.presentation.base.BaseFragment
-import com.iddevops.core.common.presentation.ext.gone
-import com.iddevops.core.common.presentation.ext.visible
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -31,18 +27,40 @@ class TodoListFragment : BaseFragment<FragmentTodoListBinding>() {
 
     override fun initData() {
         if (vm.listTodos.value !is RequestState.Success)
-            vm.getTodos()
+            vm.getCacheTodos()
     }
 
-    override fun initUi() {
-        todoAdapter = TodoAdapter {
-            Log.d("asdadad", "initUi: ${it.title}")
-        }
+    override fun initUI() {
+        todoAdapter = TodoAdapter(
+            onRequestLoadMore = {
+                vm.loadMoreTodos()
+            }
+        )
         binding.rvContent.adapter = todoAdapter
     }
 
+    override fun initAction() {
+
+    }
+
     override fun initObserver() {
-        CoroutineScope(Dispatchers.Main).launch {
+
+        lifecycleScope.launch {
+            vm.cacheTodos.collect {
+                when (it) {
+                    is RequestState.Default -> {}
+                    is RequestState.Loading -> {
+                        todoAdapter?.showLoadMore()
+                    }
+                    is RequestState.Success -> {
+                        todoAdapter?.submitList(it.data)
+                    }
+                    else -> {}
+                }
+            }
+        }
+
+        lifecycleScope.launch {
             vm.listTodos.collect {
                 when (it) {
                     is RequestState.Default -> {
@@ -56,13 +74,18 @@ class TodoListFragment : BaseFragment<FragmentTodoListBinding>() {
                         ).show()
                     }
                     is RequestState.Loading -> {
-                        binding.progressBar.visible()
+                        todoAdapter?.showLoadMore()
                     }
                     is RequestState.Success -> {
                         todoAdapter?.submitList(it.data)
-                        binding.progressBar.gone()
                     }
                 }
+            }
+        }
+
+        lifecycleScope.launch {
+            vm.canLoadMore.collect { canLoadMore ->
+                todoAdapter?.canLoadMore(canLoadMore)
             }
         }
     }

@@ -16,7 +16,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     }
 
-    override fun initUi() {
+    override fun initUI() {
+
+    }
+
+    override fun initAction() {
 
     }
 
