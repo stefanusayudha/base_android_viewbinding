@@ -32,6 +32,7 @@ class TodoListFragment : BaseFragment<FragmentTodoListBinding>() {
 
     override fun initUI() {
         todoAdapter = TodoAdapter(
+            requireContext(),
             onRequestLoadMore = {
                 vm.loadMoreTodos()
             }
