@@ -9,9 +9,7 @@ import org.koin.dsl.module
 
 val presentationModule = module {
     viewModel<DashboardSharedViewModelUseCase> {
-        DashboardSharedViewModel(
-            getOrNull()
-        )
+        DashboardSharedViewModel()
     }
     viewModel<TodoListViewModelUseCase> {
         TodoListViewModel(
