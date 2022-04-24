@@ -11,6 +11,17 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
+/**
+ * Base adapter
+ *
+ * @author stefanus.ayudha@gmail.com
+ * @param MODEL Data Model
+ * @param I Item Binding
+ * @constructor
+ *
+ * @param diffCallback Differ Configuration
+ */
+
 // Note: to use this adapter use GridLayout manager
 abstract class BaseAdapter<MODEL, I : ViewBinding>(
     diffCallback: DiffUtil.ItemCallback<MODEL>
