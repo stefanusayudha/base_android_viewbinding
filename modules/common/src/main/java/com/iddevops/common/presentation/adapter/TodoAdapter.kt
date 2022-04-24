@@ -14,10 +14,11 @@ import com.iddevops.core.common.presentation.base.BaseAdapter
 class TodoAdapter(
     val context: Context,
     val onRequestLoadMore: () -> Unit
-) : BaseAdapter<TodoModel, LayoutTodoListItemBinding, LayoutTodoListLoadingBinding>(TodoDiff) {
+) : BaseAdapter<TodoModel, LayoutTodoListItemBinding>(TodoDiff) {
 
     init {
-        setBorderSize(context.resources.getDimension(com.iddevops.core.ui.R.dimen.dp16).toInt(),3)
+        setBorderSize(context.resources.getDimension(com.iddevops.core.ui.R.dimen.dp16).toInt())
+        setSpanCount(3)
     }
 
     override fun itemBinding(parent: ViewGroup): LayoutTodoListItemBinding {

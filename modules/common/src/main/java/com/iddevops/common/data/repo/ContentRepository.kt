@@ -4,7 +4,6 @@ import com.iddevops.common.data.repo.db.ContentDBUseCase
 import com.iddevops.common.data.repo.web.self.ContentWebApi
 import com.iddevops.common.domain.contract.ContentRepositoryContract
 import com.iddevops.common.domain.model.TodoModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
@@ -15,8 +14,6 @@ class ContentRepository(
 
     override suspend fun getTodosCache(): Flow<List<TodoModel>> {
         return flow {
-            // emulate delay
-            delay(5000)
             db?.getTodos()?.let { cache ->
                 emit(cache)
             }

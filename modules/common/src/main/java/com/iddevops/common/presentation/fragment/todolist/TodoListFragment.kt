@@ -1,6 +1,8 @@
 package com.iddevops.common.presentation.fragment.todolist
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
@@ -42,6 +44,26 @@ class TodoListFragment : BaseFragment<FragmentTodoListBinding>() {
 
     override fun initAction() {
 
+        Handler(Looper.getMainLooper()).postDelayed(
+            {
+                todoAdapter?.setSpanCount(1)
+            },
+            7000
+        )
+
+        Handler(Looper.getMainLooper()).postDelayed(
+            {
+                todoAdapter?.setSpanCount(2)
+            },
+            9000
+        )
+
+        Handler(Looper.getMainLooper()).postDelayed(
+            {
+                todoAdapter?.setSpanCount(3)
+            },
+            11000
+        )
     }
 
     override fun initObserver() {

@@ -3,9 +3,9 @@ package com.iddevops.core.common.presentation.base
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 
-class BaseViewHolder<MODEL, I : ViewBinding, LI : ViewBinding>(
+class BaseViewHolder<MODEL, I : ViewBinding>(
     val binding: I? = null,
-    val loadingBinding: LI? = null,
+    val loadingBinding: ViewBinding? = null,
     val bindData: ((MODEL, I) -> Unit)?
 ) :
     RecyclerView.ViewHolder(

@@ -25,6 +25,7 @@ class TodoListViewModel(
         _todoListRequestJob?.cancel()
         _listTodos.loading()
         _todoListRequestJob = requester(_listTodos) {
+            // emulate delay
             delay(2000)
             contentUseCase?.getTodos()
         }
@@ -46,6 +47,8 @@ class TodoListViewModel(
         _todoListRequestJob?.cancel()
         _cacheTodos.loading()
         _todoListCacheRequestJob = requester(_cacheTodos) {
+            // emulate delay
+            delay(3000)
             contentUseCase?.getTodosCache()
         }
     }

@@ -1,29 +1,30 @@
 package com.iddevops.core.common.presentation.base
 
-import android.content.Context
-import android.util.Log
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.launch
 
-// FIXME: this adapter support span count up to 2 rows only
-abstract class BaseAdapter<MODEL, I : ViewBinding, LI : ViewBinding>(
+// Note: to use this adapter use GridLayout manager
+abstract class BaseAdapter<MODEL, I : ViewBinding>(
     diffCallback: DiffUtil.ItemCallback<MODEL>
-) : ListAdapter<MODEL, BaseViewHolder<MODEL, I, LI>>(diffCallback),
-    BaseListAdapterUseCase<MODEL, I, LI> {
+) : ListAdapter<MODEL, BaseViewHolder<MODEL, I>>(diffCallback),
+    BaseListAdapterUseCase<MODEL, I> {
 
     abstract override fun itemBinding(parent: ViewGroup): I
-    abstract override fun loadingItemBinding(parent: ViewGroup): LI
+    abstract override fun loadingItemBinding(parent: ViewGroup): ViewBinding
     abstract override fun onBindData(data: MODEL, binding: I)
     override fun requestLoadMore() {}
 
-    private var resourceContext: Context? = null
     private var canLoadMore = true
     private var borderSize: Int = 0
-    private var spanCount: Int = 1
+    private var spanCount = MutableStateFlow(1)
 
     enum class VIEW_TYPE(val type: Int) {
         CONTENT(0), LOAD_MORE(1)
@@ -32,7 +33,7 @@ abstract class BaseAdapter<MODEL, I : ViewBinding, LI : ViewBinding>(
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): BaseViewHolder<MODEL, I, LI> {
+    ): BaseViewHolder<MODEL, I> {
         return when (viewType) {
             VIEW_TYPE.CONTENT.type -> {
                 BaseViewHolder(
@@ -54,27 +55,27 @@ abstract class BaseAdapter<MODEL, I : ViewBinding, LI : ViewBinding>(
         return if (getItem(position) == null) VIEW_TYPE.LOAD_MORE.type else VIEW_TYPE.CONTENT.type
     }
 
-    override fun onBindViewHolder(holder: BaseViewHolder<MODEL, I, LI>, position: Int) {
+    override fun onBindViewHolder(holder: BaseViewHolder<MODEL, I>, position: Int) {
         getItem(position)?.run {
             holder.bind(this)
         }
     }
 
-    override fun onViewAttachedToWindow(holder: BaseViewHolder<MODEL, I, LI>) {
+    override fun onViewAttachedToWindow(holder: BaseViewHolder<MODEL, I>) {
         val _topMargin = when {
-            currentList.size >= spanCount
-                    && currentList.subList(0, spanCount).contains(holder.data) -> borderSize
+            currentList.size >= spanCount.value
+                    && currentList.subList(0, spanCount.value).contains(holder.data) -> borderSize
             else -> 0
         }
 
         val _rightMargin = when {
-            (currentList.indexOf(holder.data) + 1) % spanCount == 0 -> borderSize
-            else -> borderSize/2
+            (currentList.indexOf(holder.data) + 1) % spanCount.value == 0 -> borderSize
+            else -> borderSize / 2
         }
 
         val _leftMargin = when {
-            (currentList.indexOf(holder.data) + 1) % spanCount == 1 -> borderSize
-            else -> borderSize/2
+            (currentList.indexOf(holder.data) + 1) % spanCount.value == 1 -> borderSize
+            else -> borderSize / 2
         }
 
         holder.binding?.root?.layoutParams?.apply {
@@ -110,19 +111,22 @@ abstract class BaseAdapter<MODEL, I : ViewBinding, LI : ViewBinding>(
                 super.onScrolled(recyclerView, dx, dy)
             }
         })
+
+        CoroutineScope(Dispatchers.Main).launch {
+            spanCount.collect { count ->
+                (recyclerView.layoutManager as GridLayoutManager).spanCount = count
+                notifyDataSetChanged()
+            }
+        }
         super.onAttachedToRecyclerView(recyclerView)
     }
 
-    override fun setBorderSize(size: Int, spanCount: Int) {
-
-        if (spanCount > 2)
-            Log.w(
-                this::class.simpleName,
-                "setBorderSize: this feature currently support only up to 2 row span count"
-            )
-
+    override fun setBorderSize(size: Int) {
         borderSize = size
-        this.spanCount = spanCount
+    }
+
+    override fun setSpanCount(spanCount: Int) {
+        this.spanCount.value = spanCount
     }
 
     override fun showLoadMore() {
