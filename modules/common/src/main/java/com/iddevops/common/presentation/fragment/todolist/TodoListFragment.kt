@@ -43,27 +43,9 @@ class TodoListFragment : BaseFragment<FragmentTodoListBinding>() {
     }
 
     override fun initAction() {
-
-        Handler(Looper.getMainLooper()).postDelayed(
-            {
-                todoAdapter?.setSpanCount(1)
-            },
-            7000
-        )
-
-        Handler(Looper.getMainLooper()).postDelayed(
-            {
-                todoAdapter?.setSpanCount(2)
-            },
-            9000
-        )
-
-        Handler(Looper.getMainLooper()).postDelayed(
-            {
-                todoAdapter?.setSpanCount(3)
-            },
-            11000
-        )
+        Handler(Looper.getMainLooper()).postDelayed({ todoAdapter?.setSpanCount(1) }, 7000)
+        Handler(Looper.getMainLooper()).postDelayed({ todoAdapter?.setSpanCount(2) }, 9000)
+        Handler(Looper.getMainLooper()).postDelayed({ todoAdapter?.setSpanCount(3) }, 11000)
     }
 
     override fun initObserver() {
