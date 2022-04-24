@@ -11,6 +11,10 @@ import org.koin.dsl.module
 
 const val BASE_URL: String = "BASE_URL"
 
+/**
+ * Common data module - Use this as default OkHTTP, this module automatically provide chucker interceptor for debugging purpose
+ * @author stefanus.ayudha@gmail.com
+ */
 val commonDataModule: Module = module {
     single(named(BASE_URL)) { Secured.getBaseUrl() }
 

@@ -3,6 +3,16 @@ package com.iddevops.core.common.presentation.base
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 
+/**
+ * Base view holder
+ * @author stefanus.ayudha@gmail.com
+ * @param MODEL Data Model
+ * @param I ViewBinding of item in recycle view
+ * @property binding Item ViewBinding
+ * @property loadingBinding Loading Item View Binding
+ * @property bindData Callback to bind data to item binding
+ * @constructor Create empty Base view holder
+ */
 class BaseViewHolder<MODEL, I : ViewBinding>(
     val binding: I? = null,
     val loadingBinding: ViewBinding? = null,

@@ -7,6 +7,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 
+/**
+ * Base fragment
+ * @author stefanus.ayudha@gmail.com
+ * @param V View Binding to use within the fragment
+ * @constructor Create empty Base fragment
+ */
 abstract class BaseFragment<V : ViewBinding> : Fragment(), BaseView {
 
     protected lateinit var binding: V

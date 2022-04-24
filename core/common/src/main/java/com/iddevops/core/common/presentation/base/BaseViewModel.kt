@@ -17,6 +17,11 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
+/**
+ * Base view model
+ * @author stefanus.ayudha@gmail.com
+ * @constructor Create empty Base view model
+ */
 open class BaseViewModel : ViewModel() {
 
     private val supervisorJob = SupervisorJob()
@@ -33,6 +38,14 @@ open class BaseViewModel : ViewModel() {
             }
         }
 
+    /**
+     * Requester
+     * @author stefanus.ayudha@gmail.com
+     * @param T Data Type
+     * @param reqData variable to store result
+     * @param task suspend task to get the data
+     * @receiver Receive Request state of the given data type
+     */
     protected fun <T> requester(
         reqData: MutableStateFlow<RequestState<T>>,
         task: suspend CoroutineScope.() -> Flow<T>?
