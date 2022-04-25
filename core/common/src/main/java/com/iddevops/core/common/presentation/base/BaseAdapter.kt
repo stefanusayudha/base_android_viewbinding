@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
  * @author stefanus.ayudha@gmail.com
  * @param MODEL Data Model
  * @param I Item Binding
- * @constructor
+ * @constructor Require differ configuration
  *
  * @param diffCallback Differ Configuration
  */
