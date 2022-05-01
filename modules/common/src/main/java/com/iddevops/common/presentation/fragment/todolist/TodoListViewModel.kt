@@ -6,6 +6,7 @@ import com.iddevops.core.common.data.request.RequestData
 import com.iddevops.core.common.data.request.RequestState
 import com.iddevops.core.common.data.request.asImmutable
 import com.iddevops.core.common.data.request.loading
+import com.iddevops.core.common.presentation.base.BaseViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,7 +14,7 @@ import kotlinx.coroutines.flow.StateFlow
 
 class TodoListViewModel(
     private val contentUseCase: ContentUseCase?
-) : TodoListViewModelUseCase() {
+) : BaseViewModel(), TodoListViewModelUseCase {
 
     private var _todoListRequestJob: Job? = null
     private val _listTodos = RequestData<List<TodoModel>>()

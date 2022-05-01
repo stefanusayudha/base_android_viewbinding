@@ -10,7 +10,7 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>() {
         return ActivityDashboardBinding.inflate(layoutInflater)
     }
 
-    private val shareVM by viewModel<DashboardSharedViewModelUseCase>()
+    private val shareVM by viewModel<DashboardSharedViewModel>()
 
     override fun initData() {
 

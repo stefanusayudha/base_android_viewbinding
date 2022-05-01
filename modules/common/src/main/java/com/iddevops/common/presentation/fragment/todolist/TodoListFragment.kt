@@ -16,7 +16,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class TodoListFragment : BaseFragment<FragmentTodoListBinding>() {
 
-    private val vm: TodoListViewModelUseCase by viewModel()
+    private val vm: TodoListViewModel by viewModel()
     private var todoAdapter: TodoAdapter? = null
 
     override fun getViewBinding(
