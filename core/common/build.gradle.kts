@@ -18,7 +18,7 @@ dependencies {
 
     // CORE
     api("androidx.core:core-ktx:1.7.0")
-    api("androidx.lifecycle:lifecycle-runtime-ktx:2.5.0-alpha06")
+    api("androidx.lifecycle:lifecycle-runtime-ktx:2.5.0-beta01")
     api("androidx.work:work-runtime:2.7.1")
 
     // JSON
@@ -51,8 +51,16 @@ dependencies {
     api("androidx.test.ext:junit:1.1.3")
     api("androidx.test.espresso:espresso-core:3.4.0")
 
+    // NAVIGATION
+    val nav_version = "2.4.2"
+    api("androidx.navigation:navigation-fragment-ktx:$nav_version")
+    api("androidx.navigation:navigation-ui-ktx:$nav_version")
+    // Feature module Support
+    api("androidx.navigation:navigation-dynamic-features-fragment:$nav_version")
+    androidTestApi("androidx.navigation:navigation-testing:$nav_version")
+
     // ASYNC
-    api("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0")
+    api("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1")
 
     // INJECTION
     val koinVersion = "3.1.5"

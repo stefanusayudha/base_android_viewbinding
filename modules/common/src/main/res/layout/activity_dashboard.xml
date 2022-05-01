@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_height="match_parent">
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/mainFragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name="com.iddevops.common.presentation.fragment.todolist.TodoListFragment"
-        tools:layout="@layout/fragment_todo_list">
-    </androidx.fragment.app.FragmentContainerView>
+        app:defaultNavHost="false"
+        app:navGraph="@navigation/dashboard_navigation"
+        tools:layout="@layout/fragment_todo_list" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
