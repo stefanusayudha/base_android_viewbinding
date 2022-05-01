@@ -10,6 +10,7 @@ android {
 
 plugins {
     kotlin("kapt")
+    id("androidx.navigation.safeargs")
 }
 
 dependencies {
