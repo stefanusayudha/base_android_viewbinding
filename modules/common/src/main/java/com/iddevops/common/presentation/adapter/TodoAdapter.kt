@@ -35,15 +35,21 @@ class TodoAdapter(
 
     override fun onBindData(data: TodoModel, binding: LayoutTodoListItemBinding) {
         with(binding) {
-            imgContent.setBackgroundColor(
-                if (data.completed == true) Color.GREEN
-                else Color.RED
-            )
-
-            tvTitle.text = data.title
-            tvUserId.text = data.userId.toString()
-            tvComplete.text = data.completed.toString()
-
+            with(imgContent) {
+                setBackgroundColor(
+                    if (data.completed == true) Color.GREEN
+                    else Color.RED
+                )
+            }
+            with(tvTitle) {
+                text = data.title
+            }
+            with(tvUserId){
+                text = data.userId.toString()
+            }
+            with(tvComplete){
+                text = data.completed.toString()
+            }
             root.setOnClickListener {
                 Toast.makeText(root.context, "${data.title}", Toast.LENGTH_SHORT).show()
             }

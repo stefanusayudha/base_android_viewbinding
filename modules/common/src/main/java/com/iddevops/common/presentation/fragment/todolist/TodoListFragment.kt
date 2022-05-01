@@ -39,61 +39,68 @@ class TodoListFragment : BaseFragment<FragmentTodoListBinding>() {
                 vm.loadMoreTodos()
             }
         )
-        binding.rvContent.adapter = todoAdapter
+        with(binding) {
+            with(rvContent) {
+                adapter = todoAdapter
+            }
+        }
     }
 
     override fun initAction() {
-        Handler(Looper.getMainLooper()).postDelayed({ todoAdapter?.setSpanCount(1) }, 7000)
-        Handler(Looper.getMainLooper()).postDelayed({ todoAdapter?.setSpanCount(2) }, 9000)
-        Handler(Looper.getMainLooper()).postDelayed({ todoAdapter?.setSpanCount(3) }, 11000)
+        with(Handler(Looper.getMainLooper())){
+            postDelayed({ todoAdapter?.setSpanCount(1) }, 7000)
+            postDelayed({ todoAdapter?.setSpanCount(2) }, 9000)
+            postDelayed({ todoAdapter?.setSpanCount(3) }, 11000)
+        }
     }
 
     override fun initObserver() {
-
-        lifecycleScope.launch {
-            vm.cacheTodos.collect {
-                when (it) {
-                    is RequestState.Default -> {}
-                    is RequestState.Loading -> {
-                        todoAdapter?.showLoadMore()
+        with(lifecycleScope) {
+            launch {
+                vm.cacheTodos.collect {
+                    when (it) {
+                        is RequestState.Default -> {}
+                        is RequestState.Loading -> {
+                            todoAdapter?.showLoadMore()
+                        }
+                        is RequestState.Success -> {
+                            if (it.data.isEmpty())
+                                vm.getTodos()
+                            else
+                                todoAdapter?.submitList(it.data)
+                        }
+                        else -> {}
                     }
-                    is RequestState.Success -> {
-                        if (it.data.isEmpty())
-                            vm.getTodos()
-                        else
+                }
+            }
+
+            launch {
+                vm.listTodos.collect {
+                    when (it) {
+                        is RequestState.Default -> {
+
+                        }
+                        is RequestState.Failed -> {
+                            Toast.makeText(
+                                this@TodoListFragment.requireContext(),
+                                "Failed to load list",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                        is RequestState.Loading -> {
+                            todoAdapter?.showLoadMore()
+                        }
+                        is RequestState.Success -> {
                             todoAdapter?.submitList(it.data)
-                    }
-                    else -> {}
-                }
-            }
-        }
-
-        lifecycleScope.launch {
-            vm.listTodos.collect {
-                when (it) {
-                    is RequestState.Default -> {
-
-                    }
-                    is RequestState.Failed -> {
-                        Toast.makeText(
-                            this@TodoListFragment.requireContext(),
-                            "Failed to load list",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                    is RequestState.Loading -> {
-                        todoAdapter?.showLoadMore()
-                    }
-                    is RequestState.Success -> {
-                        todoAdapter?.submitList(it.data)
+                        }
                     }
                 }
             }
-        }
 
-        lifecycleScope.launch {
-            vm.canLoadMore.collect { canLoadMore ->
-                todoAdapter?.canLoadMore(canLoadMore)
+            launch {
+                vm.canLoadMore.collect { canLoadMore ->
+                    todoAdapter?.canLoadMore(canLoadMore)
+                }
             }
         }
     }
