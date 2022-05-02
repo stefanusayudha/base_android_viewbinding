@@ -7,10 +7,11 @@ import kotlinx.coroutines.flow.StateFlow
 
 interface TodoListViewModelUseCase {
     val listTodos: StateFlow<RequestState<List<TodoModel>>>
-    var currentTodosPage: MutableStateFlow<Int>
-    var canLoadMore: MutableStateFlow<Boolean>
+    val currentTodosPage: MutableStateFlow<Int>
+    val canLoadMore: MutableStateFlow<Boolean>
     fun getTodos()
-    fun loadMoreTodos()
+    fun getMoreTodos()
+
     val cacheTodos: StateFlow<RequestState<List<TodoModel>>>
     fun getCacheTodos()
 }

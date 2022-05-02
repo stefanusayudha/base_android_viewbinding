@@ -19,8 +19,8 @@ class TodoListViewModel(
     private var _todoListRequestJob: Job? = null
     private val _listTodos = RequestData<List<TodoModel>>()
     override val listTodos: StateFlow<RequestState<List<TodoModel>>> get() = _listTodos.asImmutable()
-    override var currentTodosPage = MutableStateFlow(1)
-    override var canLoadMore: MutableStateFlow<Boolean> = MutableStateFlow(true)
+    override val currentTodosPage = MutableStateFlow(1)
+    override val canLoadMore: MutableStateFlow<Boolean> = MutableStateFlow(true)
 
     override fun getTodos() {
         _todoListRequestJob?.cancel()
@@ -36,7 +36,7 @@ class TodoListViewModel(
         if (currentTodosPage.value == 3) canLoadMore.value = false
     }
 
-    override fun loadMoreTodos() {
+    override fun getMoreTodos() {
         // emulate load more
         if (_listTodos.value !is RequestState.Loading && canLoadMore.value) getTodos()
     }

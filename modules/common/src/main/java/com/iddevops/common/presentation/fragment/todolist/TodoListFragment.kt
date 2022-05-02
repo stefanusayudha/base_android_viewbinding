@@ -36,7 +36,7 @@ class TodoListFragment : BaseFragment<FragmentTodoListBinding>() {
         todoAdapter = TodoAdapter(
             requireContext(),
             onRequestLoadMore = {
-                vm.loadMoreTodos()
+                vm.getMoreTodos()
             }
         )
         with(binding) {
