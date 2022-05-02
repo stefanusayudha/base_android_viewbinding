@@ -28,15 +28,19 @@ class TodoListFragment : BaseFragment<FragmentTodoListBinding>() {
     }
 
     override fun initData() {
-        if (vm.listTodos.value !is RequestState.Success)
-            vm.getCacheTodos()
+        with(vm) {
+            if (listTodos.value !is RequestState.Success)
+                getCacheTodos()
+        }
     }
 
     override fun initUI() {
         todoAdapter = TodoAdapter(
             requireContext(),
             onRequestLoadMore = {
-                vm.getMoreTodos()
+                with(vm){
+                    getMoreTodos()
+                }
             }
         )
         with(binding) {
@@ -47,7 +51,7 @@ class TodoListFragment : BaseFragment<FragmentTodoListBinding>() {
     }
 
     override fun initAction() {
-        with(Handler(Looper.getMainLooper())){
+        with(Handler(Looper.getMainLooper())) {
             postDelayed({ todoAdapter?.setSpanCount(1) }, 7000)
             postDelayed({ todoAdapter?.setSpanCount(2) }, 9000)
             postDelayed({ todoAdapter?.setSpanCount(3) }, 11000)
@@ -61,13 +65,19 @@ class TodoListFragment : BaseFragment<FragmentTodoListBinding>() {
                     when (it) {
                         is RequestState.Default -> {}
                         is RequestState.Loading -> {
-                            todoAdapter?.showLoadMore()
+                            with(todoAdapter){
+                                this?.showLoadMore()
+                            }
                         }
                         is RequestState.Success -> {
                             if (it.data.isEmpty())
-                                vm.getTodos()
+                                with(vm){
+                                    getTodos()
+                                }
                             else
-                                todoAdapter?.submitList(it.data)
+                                with(todoAdapter){
+                                    this?.submitList(it.data)
+                                }
                         }
                         else -> {}
                     }
@@ -77,9 +87,7 @@ class TodoListFragment : BaseFragment<FragmentTodoListBinding>() {
             launch {
                 vm.listTodos.collect {
                     when (it) {
-                        is RequestState.Default -> {
-
-                        }
+                        is RequestState.Default -> {}
                         is RequestState.Failed -> {
                             Toast.makeText(
                                 this@TodoListFragment.requireContext(),
@@ -88,10 +96,14 @@ class TodoListFragment : BaseFragment<FragmentTodoListBinding>() {
                             ).show()
                         }
                         is RequestState.Loading -> {
-                            todoAdapter?.showLoadMore()
+                            with(todoAdapter){
+                                this?.showLoadMore()
+                            }
                         }
                         is RequestState.Success -> {
-                            todoAdapter?.submitList(it.data)
+                            with(todoAdapter){
+                                this?.submitList(it.data)
+                            }
                         }
                     }
                 }
