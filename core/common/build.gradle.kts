@@ -12,6 +12,7 @@ android {
             path("CMakeLists.txt")
         }
     }
+    namespace = "com.iddevops.core.common"
 }
 
 dependencies {

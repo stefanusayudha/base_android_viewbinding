@@ -6,6 +6,7 @@ android {
     viewBinding {
         isEnabled = true
     }
+    namespace = "com.iddevops.common"
 }
 
 plugins {

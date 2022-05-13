@@ -35,6 +35,7 @@ android {
     viewBinding {
         isEnabled = true
     }
+    namespace = "com.iddevops.testdatabinding"
 }
 
 dependencies {
