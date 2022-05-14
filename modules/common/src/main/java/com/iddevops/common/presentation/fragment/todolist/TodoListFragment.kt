@@ -79,7 +79,14 @@ class TodoListFragment : BaseFragment<FragmentTodoListBinding>() {
                                     this?.submitList(it.data)
                                 }
                         }
-                        else -> {}
+                        is RequestState.Failed -> {
+                            with(vm){
+                                getTodos()
+                            }
+                        }
+                        else -> {
+
+                        }
                     }
                 }
             }
