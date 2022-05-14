@@ -27,6 +27,10 @@ class TodoListFragment : BaseFragment<FragmentTodoListBinding>() {
         return FragmentTodoListBinding.inflate(inflater, container, false)
     }
 
+    override fun initNavigation() {
+
+    }
+
     override fun initData() {
         with(vm) {
             if (listTodos.value !is RequestState.Success)

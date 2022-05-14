@@ -17,6 +17,7 @@ abstract class BaseActivity<V: ViewBinding>: AppCompatActivity(), BaseView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        initNavigation()
         initData()
         initUI()
         initAction()

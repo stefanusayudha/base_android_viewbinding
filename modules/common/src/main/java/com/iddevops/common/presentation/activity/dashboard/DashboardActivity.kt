@@ -12,6 +12,10 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding>() {
 
     private val shareVM by viewModel<DashboardSharedViewModel>()
 
+    override fun initNavigation() {
+
+    }
+
     override fun initData() {
 
     }

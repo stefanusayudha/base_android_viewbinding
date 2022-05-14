@@ -28,6 +28,7 @@ abstract class BaseFragment<V : ViewBinding> : Fragment(), BaseView {
         savedInstanceState: Bundle?
     ): View? {
         binding = getViewBinding(inflater, container, savedInstanceState)
+        initNavigation()
         initData()
         initUI()
         initAction()

@@ -15,6 +15,10 @@ class DashboardFragment: BaseFragment<FragmentDashboardBinding>() {
         return FragmentDashboardBinding.inflate(inflater, container, false)
     }
 
+    override fun initNavigation() {
+
+    }
+
     override fun initData() {
 
     }

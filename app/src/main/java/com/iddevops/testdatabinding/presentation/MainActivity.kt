@@ -12,6 +12,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         return ActivityMainBinding.inflate(layoutInflater)
     }
 
+    override fun initNavigation() {
+
+    }
+
     override fun initData() {
 
     }
