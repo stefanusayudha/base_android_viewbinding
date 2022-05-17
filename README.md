@@ -28,7 +28,7 @@ Such XML layouting or Jetpack Compose for the newest version. There is codebase 
 
 2. Theme
 
-We suggest to use Material Design, as is what we are using in this code base. Its fine, robust, and progressing.
+We suggest to use Material Design, as is what we are using in this code base. It is fine, robust, and progressing.
 
   
 
