@@ -12,7 +12,7 @@ import androidx.viewbinding.ViewBinding
  */
 abstract class BaseActivity<V: ViewBinding>: AppCompatActivity(), BaseView {
 
-    protected lateinit var binding: V
+    lateinit var binding: V
     abstract fun getViewBinding(): V
 
     override fun onCreate(savedInstanceState: Bundle?) {

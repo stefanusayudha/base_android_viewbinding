@@ -15,7 +15,7 @@ import androidx.viewbinding.ViewBinding
  */
 abstract class BaseFragment<V : ViewBinding> : Fragment(), BaseView {
 
-    protected lateinit var binding: V
+    lateinit var binding: V
     abstract fun getViewBinding(
         inflater: LayoutInflater,
         container: ViewGroup?,
