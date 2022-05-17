@@ -149,6 +149,9 @@ Use robust principles. Robust principle is art of best practice.
 
 Every decision or argument taken or given without any base Principle supporting it, is consider **EMOTIONAL** decision or **EMOTIONAL** argument , is always bad decision or argument.
 
+Most people think principle is not an urgent, that is wrong. Principle is the same as Technology. Using Old Principle and Old Tech is consider the same, you will facing same big problem by ignoring new principle. Mainly because principle work at very base of the App to the development philosophy all to the final output product.
+Same with technology, principle can also be obsolete and being replaced with a new one. So **USE IT!**
+
   
 
 2. **Distribute able**
