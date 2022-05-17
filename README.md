@@ -78,8 +78,8 @@ https://miro.com/app/board/uXjVOK7eOX4=/?share_link_id=499372928469
   
 
 ## Principles
-
-  
+### THE FIVE PRINCIPLES
+by stefanus.ayudha@gmail.com (me) 
 
 1. **Stable**
 Use robust principles. Robust principle is art of best practice.
