@@ -16,7 +16,8 @@ Hai, i am Steve and i am an Android developer. I write a base sample code for ev
 # Journey Start
 
   
-
+# But before you go,
+# YOU ARE FREE TO USE THIS CODE BASE
   
 
 Here is what you will go through.
