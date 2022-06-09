@@ -6,15 +6,10 @@ import androidx.lifecycle.viewModelScope
 import com.iddevops.core.common.data.request.RequestState
 import com.iddevops.core.common.data.request.failed
 import com.iddevops.core.common.data.request.success
-import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.ensureActive
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
 /**

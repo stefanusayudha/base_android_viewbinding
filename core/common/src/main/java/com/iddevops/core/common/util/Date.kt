@@ -1,8 +1,7 @@
 package com.iddevops.core.common.util
 
 import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.TimeZone
+import java.util.*
 
 fun timeToMillis(hour: Int = 0, minute: Int = 0, sec: Int = 0): Long {
     return ((hour * 60 * 60) + (minute * 60) + sec) * 1000L
