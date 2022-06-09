@@ -19,19 +19,4 @@ interface TodoDao : DBService, ContentDBUseCase {
 
     @Query("DELETE FROM `todos`")
     override suspend fun clearTodos()
-
-//    @Query("SELECT * FROM `todos`")
-//    suspend fun read(): List<TodoEntity>
-//
-//    @Insert(onConflict = OnConflictStrategy.REPLACE)
-//    suspend fun save(vararg entity: TodoEntity)
-//
-//    @Update
-//    suspend fun update(entity: TodoEntity)
-//
-//    @Query("DELETE FROM `todos` WHERE id = :id")
-//    suspend fun delete(id: String)
-//
-//    @Query("DELETE FROM `todos`")
-//    suspend fun clear()
 }

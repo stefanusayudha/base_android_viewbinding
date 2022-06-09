@@ -17,17 +17,26 @@ import com.iddevops.core.common.util.ID
 data class TodoEntity(
     @PrimaryKey(autoGenerate = false)
     @field:SerializedName("id")
-    override val id: ID,
+    val id: ID,
 
     @field:SerializedName("completed")
     @ColumnInfo(name = "completed")
-    override val completed: Boolean?,
+    val completed: Boolean,
 
     @field:SerializedName("title")
     @ColumnInfo(name = "title")
-    override val title: String?,
+    val title: String,
 
     @field:SerializedName("userId")
     @ColumnInfo(name = "userId")
-    override val userId: String
-) : TodoModel
+    val userId: String
+) {
+    fun toTodoModel(): TodoModel {
+        return TodoModel(
+            id = this.id,
+            completed = this.completed,
+            title = this.title,
+            userId = this.userId
+        )
+    }
+}
