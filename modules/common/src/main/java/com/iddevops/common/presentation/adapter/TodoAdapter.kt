@@ -18,7 +18,8 @@ class TodoAdapter(
 
     init {
         setBorderSize(context.resources.getDimension(com.iddevops.core.ui.R.dimen.dp16).toInt())
-        setSpanCount(3)
+        // how many row do you want declare here
+        setSpanCount(1)
     }
 
     override fun itemBinding(parent: ViewGroup): LayoutTodoListItemBinding {
@@ -44,10 +45,10 @@ class TodoAdapter(
             with(tvTitle) {
                 text = data.title
             }
-            with(tvUserId){
+            with(tvUserId) {
                 text = data.userId.toString()
             }
-            with(tvComplete){
+            with(tvComplete) {
                 text = data.completed.toString()
             }
             root.setOnClickListener {
