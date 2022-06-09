@@ -12,8 +12,8 @@ import com.iddevops.common.domain.model.TodoModel
 import com.iddevops.core.common.presentation.base.BaseAdapter
 
 class TodoAdapter(
-    val context: Context,
-    val onRequestLoadMore: () -> Unit
+    private val context: Context,
+    private val onRequestLoadMore: () -> Unit
 ) : BaseAdapter<TodoModel, LayoutTodoListItemBinding>(TodoDiff) {
 
     init {
@@ -38,7 +38,7 @@ class TodoAdapter(
         with(binding) {
             with(imgContent) {
                 setBackgroundColor(
-                    if (data.completed == true) Color.GREEN
+                    if (data.completed) Color.GREEN
                     else Color.RED
                 )
             }
@@ -52,7 +52,7 @@ class TodoAdapter(
                 text = data.completed.toString()
             }
             root.setOnClickListener {
-                Toast.makeText(root.context, "${data.title}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(root.context, data.title, Toast.LENGTH_SHORT).show()
             }
         }
     }
